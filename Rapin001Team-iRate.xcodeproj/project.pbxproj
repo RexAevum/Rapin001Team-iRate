@@ -80,10 +80,10 @@
 			isa = PBXGroup;
 			children = (
 				C2B1C3F324CFA6C8009D25C4 /* AppDelegate.swift */,
-				C2B1C3F524CFA6C8009D25C4 /* ViewController.swift */,
-				C2B1C3F724CFA6C8009D25C4 /* Main.storyboard */,
+				C2B1C41724D0CED7009D25C4 /* Objects */,
+				C2B1C41624D0CEB7009D25C4 /* Controllers */,
+				C2B1C41824D0CEEC009D25C4 /* Story */,
 				C2B1C3FD24CFA6C8009D25C4 /* Assets.xcassets */,
-				C2B1C3FF24CFA6C8009D25C4 /* LaunchScreen.storyboard */,
 				C2B1C40224CFA6C8009D25C4 /* Info.plist */,
 				C2B1C3FA24CFA6C8009D25C4 /* Rapin001Team_iRate.xcdatamodeld */,
 			);
@@ -97,6 +97,30 @@
 				C2B1C40D24CFA6C8009D25C4 /* Info.plist */,
 			);
 			path = "Rapin001Team-iRateTests";
+			sourceTree = "<group>";
+		};
+		C2B1C41624D0CEB7009D25C4 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C2B1C3F524CFA6C8009D25C4 /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		C2B1C41724D0CED7009D25C4 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		C2B1C41824D0CEEC009D25C4 /* Story */ = {
+			isa = PBXGroup;
+			children = (
+				C2B1C3F724CFA6C8009D25C4 /* Main.storyboard */,
+				C2B1C3FF24CFA6C8009D25C4 /* LaunchScreen.storyboard */,
+			);
+			path = Story;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
