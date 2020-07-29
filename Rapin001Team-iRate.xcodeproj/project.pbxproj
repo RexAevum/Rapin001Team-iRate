@@ -8,12 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		C2B1C3F424CFA6C8009D25C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1C3F324CFA6C8009D25C4 /* AppDelegate.swift */; };
-		C2B1C3F624CFA6C8009D25C4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1C3F524CFA6C8009D25C4 /* ViewController.swift */; };
+		C2B1C3F624CFA6C8009D25C4 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1C3F524CFA6C8009D25C4 /* UserViewController.swift */; };
 		C2B1C3F924CFA6C8009D25C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2B1C3F724CFA6C8009D25C4 /* Main.storyboard */; };
 		C2B1C3FC24CFA6C8009D25C4 /* Rapin001Team_iRate.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C2B1C3FA24CFA6C8009D25C4 /* Rapin001Team_iRate.xcdatamodeld */; };
 		C2B1C3FE24CFA6C8009D25C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2B1C3FD24CFA6C8009D25C4 /* Assets.xcassets */; };
 		C2B1C40124CFA6C8009D25C4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2B1C3FF24CFA6C8009D25C4 /* LaunchScreen.storyboard */; };
 		C2B1C40C24CFA6C8009D25C4 /* Rapin001Team_iRateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1C40B24CFA6C8009D25C4 /* Rapin001Team_iRateTests.swift */; };
+		C2B1C41C24D0DBFC009D25C4 /* ReviewListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1C41B24D0DBFC009D25C4 /* ReviewListTableViewController.swift */; };
+		C2B1C41E24D0DC37009D25C4 /* ReviewTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1C41D24D0DC37009D25C4 /* ReviewTableCell.swift */; };
+		C2B1C42024D0EB4F009D25C4 /* ReviewDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1C41F24D0EB4F009D25C4 /* ReviewDetailViewController.swift */; };
+		C2B1C42224D0FF3D009D25C4 /* CategoryListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1C42124D0FF3D009D25C4 /* CategoryListTableViewController.swift */; };
+		C2B1C42424D0FF69009D25C4 /* CategoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1C42324D0FF69009D25C4 /* CategoryDetailViewController.swift */; };
+		C2B1C42624D0FF9B009D25C4 /* CategoryTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1C42524D0FF9B009D25C4 /* CategoryTableCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,7 +35,7 @@
 /* Begin PBXFileReference section */
 		C2B1C3F024CFA6C8009D25C4 /* Rapin001Team-iRate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Rapin001Team-iRate.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2B1C3F324CFA6C8009D25C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C2B1C3F524CFA6C8009D25C4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C2B1C3F524CFA6C8009D25C4 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		C2B1C3F824CFA6C8009D25C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C2B1C3FB24CFA6C8009D25C4 /* Rapin001Team_iRate.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Rapin001Team_iRate.xcdatamodel; sourceTree = "<group>"; };
 		C2B1C3FD24CFA6C8009D25C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -38,6 +44,12 @@
 		C2B1C40724CFA6C8009D25C4 /* Rapin001Team-iRateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Rapin001Team-iRateTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2B1C40B24CFA6C8009D25C4 /* Rapin001Team_iRateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rapin001Team_iRateTests.swift; sourceTree = "<group>"; };
 		C2B1C40D24CFA6C8009D25C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C2B1C41B24D0DBFC009D25C4 /* ReviewListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewListTableViewController.swift; sourceTree = "<group>"; };
+		C2B1C41D24D0DC37009D25C4 /* ReviewTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTableCell.swift; sourceTree = "<group>"; };
+		C2B1C41F24D0EB4F009D25C4 /* ReviewDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailViewController.swift; sourceTree = "<group>"; };
+		C2B1C42124D0FF3D009D25C4 /* CategoryListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListTableViewController.swift; sourceTree = "<group>"; };
+		C2B1C42324D0FF69009D25C4 /* CategoryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDetailViewController.swift; sourceTree = "<group>"; };
+		C2B1C42524D0FF9B009D25C4 /* CategoryTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,8 +92,9 @@
 			isa = PBXGroup;
 			children = (
 				C2B1C3F324CFA6C8009D25C4 /* AppDelegate.swift */,
-				C2B1C41724D0CED7009D25C4 /* Objects */,
-				C2B1C41624D0CEB7009D25C4 /* Controllers */,
+				C2B1C41A24D0DB36009D25C4 /* Reviews */,
+				C2B1C41924D0DB1E009D25C4 /* Categories */,
+				C2B1C41624D0CEB7009D25C4 /* User */,
 				C2B1C41824D0CEEC009D25C4 /* Story */,
 				C2B1C3FD24CFA6C8009D25C4 /* Assets.xcassets */,
 				C2B1C40224CFA6C8009D25C4 /* Info.plist */,
@@ -99,19 +112,12 @@
 			path = "Rapin001Team-iRateTests";
 			sourceTree = "<group>";
 		};
-		C2B1C41624D0CEB7009D25C4 /* Controllers */ = {
+		C2B1C41624D0CEB7009D25C4 /* User */ = {
 			isa = PBXGroup;
 			children = (
-				C2B1C3F524CFA6C8009D25C4 /* ViewController.swift */,
+				C2B1C3F524CFA6C8009D25C4 /* UserViewController.swift */,
 			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
-		C2B1C41724D0CED7009D25C4 /* Objects */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Objects;
+			path = User;
 			sourceTree = "<group>";
 		};
 		C2B1C41824D0CEEC009D25C4 /* Story */ = {
@@ -121,6 +127,26 @@
 				C2B1C3FF24CFA6C8009D25C4 /* LaunchScreen.storyboard */,
 			);
 			path = Story;
+			sourceTree = "<group>";
+		};
+		C2B1C41924D0DB1E009D25C4 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				C2B1C42124D0FF3D009D25C4 /* CategoryListTableViewController.swift */,
+				C2B1C42324D0FF69009D25C4 /* CategoryDetailViewController.swift */,
+				C2B1C42524D0FF9B009D25C4 /* CategoryTableCell.swift */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		C2B1C41A24D0DB36009D25C4 /* Reviews */ = {
+			isa = PBXGroup;
+			children = (
+				C2B1C41B24D0DBFC009D25C4 /* ReviewListTableViewController.swift */,
+				C2B1C41D24D0DC37009D25C4 /* ReviewTableCell.swift */,
+				C2B1C41F24D0EB4F009D25C4 /* ReviewDetailViewController.swift */,
+			);
+			path = Reviews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,9 +252,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C2B1C3F624CFA6C8009D25C4 /* ViewController.swift in Sources */,
+				C2B1C42024D0EB4F009D25C4 /* ReviewDetailViewController.swift in Sources */,
+				C2B1C42424D0FF69009D25C4 /* CategoryDetailViewController.swift in Sources */,
+				C2B1C42624D0FF9B009D25C4 /* CategoryTableCell.swift in Sources */,
+				C2B1C41E24D0DC37009D25C4 /* ReviewTableCell.swift in Sources */,
+				C2B1C3F624CFA6C8009D25C4 /* UserViewController.swift in Sources */,
 				C2B1C3FC24CFA6C8009D25C4 /* Rapin001Team_iRate.xcdatamodeld in Sources */,
 				C2B1C3F424CFA6C8009D25C4 /* AppDelegate.swift in Sources */,
+				C2B1C41C24D0DBFC009D25C4 /* ReviewListTableViewController.swift in Sources */,
+				C2B1C42224D0FF3D009D25C4 /* CategoryListTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
