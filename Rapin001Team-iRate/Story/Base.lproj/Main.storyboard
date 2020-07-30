@@ -411,7 +411,7 @@
                         <outlet property="picture" destination="dZf-tP-zkn" id="TNl-9X-31V"/>
                         <outlet property="ratingField" destination="Tcc-ke-uEN" id="5Lc-i9-t61"/>
                         <outlet property="titleField" destination="9Bn-G3-IE1" id="BLU-bA-glb"/>
-                        <outlet property="updatePhoto" destination="d5l-re-ouS" id="yUu-1A-Zti"/>
+                        <outlet property="updatePhoto" destination="d5l-re-ouS" id="iPq-DM-b8b"/>
                         <outlet property="website" destination="F2n-zS-lGP" id="Xs1-hH-Trb"/>
                     </connections>
                 </viewController>

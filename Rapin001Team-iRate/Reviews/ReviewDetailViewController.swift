@@ -17,18 +17,47 @@ class ReviewDetailViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var website: UITextField!
     @IBOutlet weak var notesField: UITextView!
     
+    // store
+    var currentReview: Review!
+    let del = UIApplication.shared.delegate as! AppDelegate
+    
     //Outlet for photo
     @IBOutlet weak var picture: UIImageView!
+    @IBOutlet weak var updatePhoto: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func viewDidAppear(_ animated: Bool) {
+        //get object form DB
+       /*
+        let context = del.persistentContainer.viewContext
+        currentReview = Review(context: context)
+        */
+        
+        //assign to text fields retrieved values
+        titleField.text = currentReview.title
+        categoryField.text = currentReview.category as? String
+        ratingField.text = currentReview.rating
+        website.text = currentReview.website as? String
+        notesField.text = currentReview.notes
+        
+        
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        currentReview.title = titleField.text
+        currentReview.category = (categoryField.text! as NSString)
+        currentReview.rating = categoryField.text
+        let url = URL(string: website.text!)
+        currentReview.website = url as NSObject?
+        currentReview.notes = notesField.text
+        
+    }
+
     //MARK:- UITextField Delegate
     
     //Deleget for what to do when eturn is pressed

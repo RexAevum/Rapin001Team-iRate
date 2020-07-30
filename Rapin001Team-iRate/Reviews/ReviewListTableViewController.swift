@@ -7,28 +7,61 @@
 //
 
 import UIKit
+import CoreData
 
 class ReviewListTableViewController: UITableViewController, UISearchBarDelegate {
+    
+    //store
+    
+    lazy var allReviews: [Review] = []
+    
+    var localAppDelegate: AppDelegate!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        localAppDelegate = UIApplication.shared.delegate as! AppDelegate
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
          self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let context = localAppDelegate.persistentContainer.viewContext
+        allReviews = getData(context: context) as! [Review]
+        tableView.reloadData()
+    }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    //getData - function will retrieve all data from the DB and store it in the local variable
+    func getData(context: NSManagedObjectContext) -> [Any]? {
+        let context = localAppDelegate.persistentContainer.viewContext
+        do {
+            return try context.fetch(Review.fetchRequest())
+        } catch {
+            print("Fetching Failed")
+        }
+        return []
     }
     
     //MARK:- Button Actions
 
     @IBAction func addNewReviewButton(_ sender: UIBarButtonItem) {
         //FIXME - add code to add a new review to DB and update the rows
+        let context = localAppDelegate.persistentContainer.viewContext
+        let review = Review(context: context)
+        review.title = "New Item"
+        review.category = "None" as! NSObject
+        review.ownedByUser = UUID()
+        review.rating = "None"
+        review.reviewID = UUID()
+        review.website = nil
+        
+        //save the context
+        localAppDelegate.saveContext()
+        
+        //update table
+        tableView.reloadData()
     }
     
     //MARK:- Search Bar
@@ -52,23 +85,36 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate 
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+            return allReviews.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "showReviewSegue", for: indexPath)
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reviewCell", for: indexPath) as! ReviewTableCell
+        
+        // show all reviews form allReviews
+        if allReviews == []{
+            /*
+            cell.title.text = "New Review"
+            cell.category.text = "None"
+            cell.score.text = "7.5"
+ */
+            return cell
+        }
+        let current = allReviews[indexPath.row]
+        
+        cell.title.text = current.title
+        cell.category.text = current.category as? String
+        cell.score.text = current.rating
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -78,24 +124,42 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate 
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        let context = localAppDelegate.persistentContainer.viewContext
         if editingStyle == .delete {
             // Delete the row from the data source
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+            
+            //create a new review object
+            //guard is used on asignments that could fail and how to handle the error
+            let review = Review(context: context)
+            review.title = "New Item"
+            review.category = "None" as! NSObject
+            review.ownedByUser = nil
+            review.rating = "None"
+            review.reviewID = UUID()
+            review.website = nil
+            review.notes = "Add description"
+            
+            //save the context
+            localAppDelegate.saveContext()
+  
+            //update table
+            tableView.insertRows(at: [indexPath], with: .automatic)
         }    
     }
-    */
+ 
 
-    /*
+    
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
 
     }
-    */
+    
 
     /*
     // Override to support conditional rearranging of the table view.
@@ -105,14 +169,25 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate 
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        switch segue.identifier {
+        case "showReviewSegue"?:
+            let destin = segue.destination as! ReviewDetailViewController
+            let index = tableView.indexPathForSelectedRow?.row
+            
+            destin.currentReview = allReviews[index!]
+            
+        default:
+            fatalError("Unknown segue when on \(self)")
+        }
+        
     }
-    */
+ 
 
 }
