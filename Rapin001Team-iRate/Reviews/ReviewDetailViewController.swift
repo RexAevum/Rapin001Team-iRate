@@ -6,9 +6,17 @@
 //  Copyright © 2020 Rolans Apinis. All rights reserved.
 //
 
-import UIKit
+/*
+ Class: ReviewDetailViewController
+ This view Controller will control the detail view page where the user will be able to read and set information for the perticular selected review
+ variables:
+ currentReview - stores the current review item for displaying and updating
+ */
 
-class ReviewDetailViewController: UIViewController, UITextFieldDelegate {
+import UIKit
+import CoreData
+
+class ReviewDetailViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
     //IBOutlets
     @IBOutlet weak var titleField: UITextField!
@@ -51,14 +59,17 @@ class ReviewDetailViewController: UIViewController, UITextFieldDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         currentReview.title = titleField.text
         currentReview.category = (categoryField.text! as NSString)
-        currentReview.rating = categoryField.text
+        currentReview.rating = ratingField.text
         let url = URL(string: website.text!)
         currentReview.website = url as NSObject?
         currentReview.notes = notesField.text
         
+        //save context
+        del.saveContext()
+        
     }
 
-    //MARK:- UITextField Delegate
+    //MARK:- UITextField and UITextView Delegates
     
     //Deleget for what to do when eturn is pressed
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -70,6 +81,14 @@ class ReviewDetailViewController: UIViewController, UITextFieldDelegate {
     //Delegate for what to do when a text field is pressed - open keyboard
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.becomeFirstResponder()
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        textView.becomeFirstResponder()
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        textView.resignFirstResponder()
     }
     
     //MARK:- Image View

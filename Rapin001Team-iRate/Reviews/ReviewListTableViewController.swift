@@ -51,7 +51,7 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate 
         let context = localAppDelegate.persistentContainer.viewContext
         let review = Review(context: context)
         review.title = "New Item"
-        review.category = "None" as! NSObject
+        review.category = "None" as NSObject
         review.ownedByUser = UUID()
         review.rating = "None"
         review.reviewID = UUID()
@@ -97,15 +97,6 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reviewCell", for: indexPath) as! ReviewTableCell
         
-        // show all reviews form allReviews
-        if allReviews == []{
-            /*
-            cell.title.text = "New Review"
-            cell.category.text = "None"
-            cell.score.text = "7.5"
- */
-            return cell
-        }
         let current = allReviews[indexPath.row]
         
         cell.title.text = current.title
@@ -116,40 +107,30 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate 
     }
     
 
-    /*
+    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
+ 
 
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         let context = localAppDelegate.persistentContainer.viewContext
         if editingStyle == .delete {
-            // Delete the row from the data source
+            // Delete the row from the data source and update table
+            //remove review from allReviews
+            let review = allReviews.remove(at: indexPath.row)
+            //remove review from context store
+            context.delete(review)
+            //perform the update
+            localAppDelegate.saveContext()
+            
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-            
-            //create a new review object
-            //guard is used on asignments that could fail and how to handle the error
-            let review = Review(context: context)
-            review.title = "New Item"
-            review.category = "None" as! NSObject
-            review.ownedByUser = nil
-            review.rating = "None"
-            review.reviewID = UUID()
-            review.website = nil
-            review.notes = "Add description"
-            
-            //save the context
-            localAppDelegate.saveContext()
-  
-            //update table
-            tableView.insertRows(at: [indexPath], with: .automatic)
         }    
     }
  
@@ -157,9 +138,23 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate 
     
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+        moveReview(from: fromIndexPath.row, to: to.row)
 
     }
     
+    func moveReview(from: Int, to: Int) -> () {
+        //store the from review
+        let temp = allReviews[from]
+        
+        //override from with to
+        allReviews[from] = allReviews[to]
+        allReviews[to] = temp
+        
+        //update context
+        let context = localAppDelegate.persistentContainer.viewContext
+        //context.
+        localAppDelegate.saveContext()
+    }
 
     /*
     // Override to support conditional rearranging of the table view.
@@ -188,6 +183,7 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate 
         }
         
     }
+    
  
 
 }
