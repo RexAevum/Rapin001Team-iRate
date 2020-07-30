@@ -9,13 +9,15 @@
 import UIKit
 import CoreData
 
-class ReviewListTableViewController: UITableViewController, UISearchBarDelegate {
+class ReviewListTableViewController: UITableViewController, UISearchBarDelegate{
     
     //store
     
     lazy var allReviews: [Review] = []
     
     var localAppDelegate: AppDelegate!
+    var isNewReview = false
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +26,7 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate 
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-         self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -32,8 +34,10 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate 
         allReviews = getData(context: context) as! [Review]
         tableView.reloadData()
     }
+    
 
-    //getData - function will retrieve all data from the DB and store it in the local variable
+    //MARK: getData
+    //- function will retrieve all data from the DB and store it in the local variable
     func getData(context: NSManagedObjectContext) -> [Any]? {
         let context = localAppDelegate.persistentContainer.viewContext
         do {
@@ -57,12 +61,19 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate 
         review.reviewID = UUID()
         review.website = nil
         
+        
         //save the context
         localAppDelegate.saveContext()
+        isNewReview = true
         
-        //update table
+        allReviews = getData(context: context) as! [Review]
         tableView.reloadData()
+        //update table
+        performSegue(withIdentifier: "showReviewSegue", sender: sender)
+        
     }
+    
+    
     
     //MARK:- Search Bar
     @IBOutlet weak var reviewSearchBar: UISearchBar!
@@ -96,12 +107,11 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reviewCell", for: indexPath) as! ReviewTableCell
+        let current: Review? = allReviews[indexPath.row]
         
-        let current = allReviews[indexPath.row]
-        
-        cell.title.text = current.title
-        cell.category.text = current.category as? String
-        cell.score.text = current.rating
+        cell.title.text = current?.title!
+        cell.category.text = current?.category as? String
+        cell.score.text = current?.rating!
 
         return cell
     }
@@ -114,55 +124,24 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate 
         return true
     }
  
-
-    
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        let context = localAppDelegate.persistentContainer.viewContext
-        if editingStyle == .delete {
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let actions = UIContextualAction(style: .destructive, title: "Delete", handler: {(actions, view, completionHandler)  -> () in
+            let context = self.localAppDelegate.persistentContainer.viewContext
             // Delete the row from the data source and update table
             //remove review from allReviews
-            let review = allReviews.remove(at: indexPath.row)
+            let review = self.allReviews.remove(at: indexPath.row)
             //remove review from context store
             context.delete(review)
             //perform the update
-            localAppDelegate.saveContext()
+            self.localAppDelegate.saveContext()
             
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
- 
-
-    
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        moveReview(from: fromIndexPath.row, to: to.row)
-
+            completionHandler(true)
+    })
+       return UISwipeActionsConfiguration(actions: [actions])
     }
     
-    func moveReview(from: Int, to: Int) -> () {
-        //store the from review
-        let temp = allReviews[from]
-        
-        //override from with to
-        allReviews[from] = allReviews[to]
-        allReviews[to] = temp
-        
-        //update context
-        let context = localAppDelegate.persistentContainer.viewContext
-        //context.
-        localAppDelegate.saveContext()
-    }
 
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     
     // MARK: - Navigation
@@ -176,8 +155,11 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate 
             let destin = segue.destination as! ReviewDetailViewController
             let index = tableView.indexPathForSelectedRow?.row
             
-            destin.currentReview = allReviews[index!]
-            
+            if isNewReview{
+                destin.currentReview = allReviews[allReviews.count - 1]
+            }else{
+                destin.currentReview = allReviews[index!]
+            }
         default:
             fatalError("Unknown segue when on \(self)")
         }

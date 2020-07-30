@@ -47,12 +47,19 @@ class ReviewDetailViewController: UIViewController, UITextFieldDelegate, UITextV
         */
         
         //assign to text fields retrieved values
-        titleField.text = currentReview.title
-        categoryField.text = currentReview.category as? String
-        ratingField.text = currentReview.rating
-        website.text = currentReview.website as? String
-        notesField.text = currentReview.notes
-        
+        if currentReview != nil{
+            titleField.text = currentReview.title
+            categoryField.text = currentReview.category as? String
+            ratingField.text = currentReview.rating
+            website.text = currentReview.website as? String
+            notesField.text = currentReview.notes
+        }else{
+            titleField.text = "New Review"
+            categoryField.text = "None"
+            ratingField.text = "5.0"
+            website.text = "Add Website"
+            notesField.text = "Add notes here"
+        }
         
     }
     

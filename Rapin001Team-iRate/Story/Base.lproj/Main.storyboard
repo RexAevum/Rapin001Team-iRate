@@ -58,10 +58,12 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <gestureRecognizers/>
                                 <connections>
                                     <outlet property="category" destination="Db7-DQ-RSP" id="mos-x0-GUC"/>
                                     <outlet property="score" destination="Wgp-WT-MYz" id="5Cn-nh-gwv"/>
                                     <outlet property="title" destination="GQe-Dh-tgi" id="ez0-ii-euw"/>
+                                    <outletCollection property="gestureRecognizers" destination="Jm0-ew-gui" appends="YES" id="Gd7-dL-aFv"/>
                                     <segue destination="wEN-e6-OnU" kind="show" identifier="showReviewSegue" id="b1c-cQ-kxr"/>
                                 </connections>
                             </tableViewCell>
@@ -73,10 +75,14 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Reviews" id="lEN-q7-LwE">
                         <rightBarButtonItems>
-                            <barButtonItem title="Edit" id="lCa-xq-ky2"/>
                             <barButtonItem systemItem="add" id="af2-n6-iUl">
                                 <connections>
                                     <action selector="addNewReviewButton:" destination="Gym-ME-tjV" id="EAx-fg-A6g"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Sort" id="oWG-Ze-ULH">
+                                <connections>
+                                    <action selector="sortReviews:" destination="Gym-ME-tjV" id="5Hg-12-wGK"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -86,6 +92,11 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FHP-9d-2lv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="Jm0-ew-gui">
+                    <connections>
+                        <outlet property="delegate" destination="Gym-ME-tjV" id="Qi2-Df-AZ8"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3536.8000000000002" y="-762.36881559220399"/>
         </scene>
