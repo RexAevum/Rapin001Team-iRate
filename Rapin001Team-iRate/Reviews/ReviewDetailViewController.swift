@@ -16,7 +16,9 @@
 import UIKit
 import CoreData
 
-class ReviewDetailViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ReviewDetailViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+
+    
 
     //IBOutlets
     @IBOutlet weak var titleField: UITextField!
@@ -33,10 +35,36 @@ class ReviewDetailViewController: UIViewController, UITextFieldDelegate, UITextV
     @IBOutlet weak var picture: UIImageView!
     @IBOutlet weak var updatePhoto: UIButton!
     
+    //picker
+    var scorePicker: UIPickerView = UIPickerView()
+    var pickerStore: [String?] = ["0.0", "0.5", "1.0", "1.5", "2.0", "2.5", "3.0", "3.5", "4.0", "4.5", "5.0", "5.5", "6.0", "6.5", "7.0", "7.5", "8.0", "8.5", "9.0", "9.5", "10.0" ]
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        
+        //MARK: Set up UIPicker
+        //set delegate and store
+        self.scorePicker.delegate = self
+        self.scorePicker.dataSource = self
+        
+        // add date picker to view when it initaly loads
+        
+        
+        //add toolbar to keyboard
+        let tool = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 20))
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(ReviewDetailViewController.exitInput))
+        let x = [doneButton]
+        
+        tool.items = x
+        tool.sizeToFit()
+        
+        //set views for date picker
+        ratingField.inputView = scorePicker
+        ratingField.inputAccessoryView = tool
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -70,6 +98,7 @@ class ReviewDetailViewController: UIViewController, UITextFieldDelegate, UITextV
         }
         
     }
+
     
     override func viewWillDisappear(_ animated: Bool) {
         currentReview.title = titleField.text
@@ -82,6 +111,33 @@ class ReviewDetailViewController: UIViewController, UITextFieldDelegate, UITextV
         //save context
         del.saveContext()
         
+
+        
+    }
+    
+    //MARK:- UIPicker View for score
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerStore.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerStore[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        ratingField.text = pickerStore[row]
+    }
+
+
+  
+
+    @objc func exitInput(){
+        self.resignFirstResponder()
+        self.view.endEditing(true)
     }
 
     //MARK:- UITextField and UITextView Delegates
