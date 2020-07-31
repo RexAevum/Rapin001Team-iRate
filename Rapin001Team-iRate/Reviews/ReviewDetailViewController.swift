@@ -54,11 +54,14 @@ class ReviewDetailViewController: UIViewController, UITextFieldDelegate, UITextV
             website.text = currentReview.website as? String
             notesField.text = currentReview.notes
         }else{
+            currentReview = Review(context: del.persistentContainer.viewContext)
             titleField.text = "New Review"
             categoryField.text = "None"
             ratingField.text = "5.0"
             website.text = "Add Website"
             notesField.text = "Add notes here"
+            
+            del.saveContext()
         }
         
     }

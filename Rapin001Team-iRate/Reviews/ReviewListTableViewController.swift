@@ -17,6 +17,9 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate{
     
     var localAppDelegate: AppDelegate!
     var isNewReview = false
+    var searchBarInput = String("*")
+    var sortAsce = false
+    var predicateLast: NSPredicate?
     
 
     override func viewDidLoad() {
@@ -36,12 +39,50 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate{
     }
     
 
-    //MARK: getData
-    //- function will retrieve all data from the DB and store it in the local variable
-    func getData(context: NSManagedObjectContext) -> [Any]? {
+    //MARK:- getData
+    //function will retrieve all data from the DB and store it in the local variable
+    func getData(context: NSManagedObjectContext?) -> [Any]? {
         let context = localAppDelegate.persistentContainer.viewContext
+        
+        //define custom fetch predicate
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Review")
+       
+            //let fetchPreditcate = NSPredicate(format: "title == \(searchBarInput)")
+            let sort = NSSortDescriptor(key: #keyPath(Review.title), ascending: sortAsce)
+            // add the predicate and sort to fetch request
+            //fetchRequest.predicate = fetchPreditcate
+            fetchRequest.sortDescriptors = [sort]
+        
         do {
-            return try context.fetch(Review.fetchRequest())
+            return try context.fetch(fetchRequest)
+        } catch {
+            print("Fetching Failed")
+        }
+        return []
+    }
+    
+    func getData(predicateString: String?) -> [Any]?{
+        //get context
+        let context = localAppDelegate.persistentContainer.viewContext
+        
+        //define fetch request
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Review")
+        var fetchPredicate = NSPredicate()
+        //create a predicate
+        if predicateString != ""{
+            fetchPredicate = NSPredicate(format: "title CONTAINS[c] %@", (predicateString?.lowercased())!)
+            
+            //assign predicate to fetch request
+            fetchRequest.predicate = fetchPredicate
+            
+        //want the search to be ascending order
+            let sortOrder = NSSortDescriptor(key: #keyPath(Review.title), ascending: true)
+            fetchRequest.sortDescriptors = [sortOrder]
+            
+        }
+        //perfom safe fetch request
+        do {
+            return try context.fetch(fetchRequest)
         } catch {
             print("Fetching Failed")
         }
@@ -60,19 +101,32 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate{
         review.rating = "None"
         review.reviewID = UUID()
         review.website = nil
+        review.notes = "Add notes"
         
         
         //save the context
         localAppDelegate.saveContext()
         isNewReview = true
         
-        allReviews = getData(context: context) as! [Review]
-        tableView.reloadData()
+        //allReviews = getData(context: context) as! [Review]
+        //tableView.reloadData()
         //update table
-        performSegue(withIdentifier: "showReviewSegue", sender: sender)
+        performSegue(withIdentifier: "showReviewSegue", sender: review)
         
     }
     
+    @IBAction func toggleSortOrderButton(_ sender: UIBarButtonItem) {
+        
+        if sortAsce{
+            sortAsce = false
+            sender.title = "Desc"
+        }else{
+            sortAsce = true
+            sender.title = "Asce"
+        }
+        allReviews = getData(context: localAppDelegate.persistentContainer.viewContext) as! [Review]
+        tableView.reloadData()
+    }
     
     
     //MARK:- Search Bar
@@ -87,10 +141,14 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate{
         searchBar.resignFirstResponder()
     }
     //perform search for the given title
-    func searchBarResultsListButtonClicked(_ searchBar: UISearchBar) {
-        //FIXME - add code to take text and exectue search based on title
-    }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        //get string and set search parameters in get data
+        let searchText = searchBar.text!
+        
+        allReviews = getData(predicateString: searchText) as! [Review]
+        tableView.reloadData()
+    }
 
     // MARK: - Table view data source
 
@@ -117,7 +175,7 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate{
     }
     
 
-    
+    //MARK:- Swipe Action
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
@@ -156,7 +214,8 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate{
             let index = tableView.indexPathForSelectedRow?.row
             
             if isNewReview{
-                destin.currentReview = allReviews[allReviews.count - 1]
+                isNewReview = false
+                destin.currentReview = sender as! Review
             }else{
                 destin.currentReview = allReviews[index!]
             }

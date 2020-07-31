@@ -80,9 +80,9 @@
                                     <action selector="addNewReviewButton:" destination="Gym-ME-tjV" id="EAx-fg-A6g"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Sort" id="oWG-Ze-ULH">
+                            <barButtonItem title="Desc" id="uTo-Yh-DXX">
                                 <connections>
-                                    <action selector="sortReviews:" destination="Gym-ME-tjV" id="5Hg-12-wGK"/>
+                                    <action selector="toggleSortOrderButton:" destination="Gym-ME-tjV" id="db8-GC-bTZ"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
