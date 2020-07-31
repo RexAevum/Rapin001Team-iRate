@@ -70,7 +70,7 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate{
         var fetchPredicate = NSPredicate()
         //create a predicate
         if predicateString != ""{
-            fetchPredicate = NSPredicate(format: "title CONTAINS[c] %@", (predicateString?.lowercased())!)
+            fetchPredicate = NSPredicate(format: "title CONTAINS[c] %@", (predicateString?.capitalized)!)
             
             //assign predicate to fetch request
             fetchRequest.predicate = fetchPredicate
@@ -114,7 +114,7 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate{
         performSegue(withIdentifier: "showReviewSegue", sender: review)
         
     }
-    
+    //Function will allow for sorting the array in a ascending and descending order
     @IBAction func toggleSortOrderButton(_ sender: UIBarButtonItem) {
         
         if sortAsce{
@@ -146,8 +146,11 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate{
         //get string and set search parameters in get data
         let searchText = searchBar.text!
         
+        //perform a fetch with the given predicate
         allReviews = getData(predicateString: searchText) as! [Review]
         tableView.reloadData()
+        //get rid of the keyboard
+        searchBar.resignFirstResponder()
     }
 
     // MARK: - Table view data source

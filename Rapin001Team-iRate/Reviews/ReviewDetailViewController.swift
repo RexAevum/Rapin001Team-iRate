@@ -16,7 +16,7 @@
 import UIKit
 import CoreData
 
-class ReviewDetailViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
+class ReviewDetailViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     //IBOutlets
     @IBOutlet weak var titleField: UITextField!
@@ -53,6 +53,11 @@ class ReviewDetailViewController: UIViewController, UITextFieldDelegate, UITextV
             ratingField.text = currentReview.rating
             website.text = currentReview.website as? String
             notesField.text = currentReview.notes
+            
+            if (currentReview.image != nil){
+                picture.image = UIImage(data: currentReview.image!)
+            }
+            
         }else{
             currentReview = Review(context: del.persistentContainer.viewContext)
             titleField.text = "New Review"
@@ -106,9 +111,38 @@ class ReviewDetailViewController: UIViewController, UITextFieldDelegate, UITextV
     @IBAction func updatePhotoButton(_ sender: UIButton) {
         //add code to chenge photo for UIImageView
         //reference older project for camera view implementatation
+        let imagePicker = UIImagePickerController()
+        
+        // select source type
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            imagePicker.sourceType = .camera
+        }else{
+            imagePicker.sourceType = .photoLibrary
+        }
+        
+        // have to import both UINavigationControllerDelegate and UIImagePickerControllerDelegate
+        imagePicker.delegate = self
+        
+        //by calling present you are moving a view to be displayed, transition between views
+        present(imagePicker, animated: true, completion: nil)
     }
     
-    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        
+        //convert image to binary data
+        let pic: Data = UIImagePNGRepresentation(image)!
+        
+        //set the imageView as the selected image
+        
+        currentReview.image = pic
+        
+        del.saveContext()
+        
+        // need to dismiss once an image has been seleted
+        
+        dismiss(animated: true, completion: nil)
+    }
     /*
     // MARK: - Navigation
 
