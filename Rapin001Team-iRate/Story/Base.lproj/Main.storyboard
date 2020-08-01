@@ -257,7 +257,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ti0-Y6-q7n">
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ti0-Y6-q7n">
                                         <rect key="frame" x="294" y="0.0" width="51" height="31"/>
                                         <connections>
                                             <action selector="stayLoggedIn:" destination="f27-Kz-n96" eventType="valueChanged" id="ugf-K8-7sG"/>

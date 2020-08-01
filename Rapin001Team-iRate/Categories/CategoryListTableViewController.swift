@@ -118,13 +118,27 @@ class CategoryListTableViewController: UITableViewController {
     }
     
 
-    /*
-    // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let actions = UIContextualAction(style: .destructive, title: "Delete", handler: {(actions, view, completionHandler)  -> () in
+            let context = self.localAppDelegate.persistentContainer.viewContext
+            // Delete the row from the data source and update table
+            //remove review from allReviews
+            let category = self.allCategories.remove(at: indexPath.row)
+            //remove review from context store
+            context.delete(category)
+            //perform the update
+            self.localAppDelegate.saveContext()
+            
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            completionHandler(true)
+        })
+        return UISwipeActionsConfiguration(actions: [actions])
+    }
 
     /*
     // Override to support editing the table view.

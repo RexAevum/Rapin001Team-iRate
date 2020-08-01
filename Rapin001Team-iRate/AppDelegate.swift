@@ -40,12 +40,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         //check if there are any registred users, if yes grab info if no create a new user and allow to pass the log in screen
         
-        print("Users retrieved at appstart \(users?.count)")
+       // print("Users retrieved at appstart \(users?.count)")
         if users?.count != 0{
             user = users?.first
             askForPassword = (user?.askForPassword)!
             print("\(self) ask for password \(askForPassword.description)")
         }else{
+            // if first time log on create new user  and save to context
             user = User(context: self.persistentContainer.viewContext)
             user?.userName = "admin"
             user?.userID = UUID()
