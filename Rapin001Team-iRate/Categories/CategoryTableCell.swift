@@ -1,26 +1,27 @@
 //
-//  CategoryTableCell.swift
-//  Rapin001Team-iRate
-//
-//  Created by Rolans Apinis on 7/28/20.
-//  Copyright © 2020 Rolans Apinis. All rights reserved.
-//
+//  PROGRAMMER: Rolans Apinis
+//  PANTHERID: 6044121
+//  CLASS: COP 465501 TR 5:00
+//  INSTRUCTOR: Steve Luis ECS 282
+//  ASSIGNMENT: Team/Individual Project - iRate
+//  DUE: Saturday 08/01/2020 //
 
 import UIKit
 
-class CategoryTableCell: UITableViewCell, UITextFieldDelegate {
+class CategoryTableCell: UITableViewCell {
     
     //fields
     @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var descriptionField: UITextField!
+ 
+    @IBOutlet weak var categoryDescription: UILabel!
     @IBOutlet weak var count: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         name.text = ""
-        descriptionField.text = ""
-        count.text = ""
+        categoryDescription.text = ""
+        count.text = "0"
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

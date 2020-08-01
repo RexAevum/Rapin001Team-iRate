@@ -1,10 +1,10 @@
 //
-//  AppDelegate.swift
-//  Rapin001Team-iRate
-//
-//  Created by Rolans Apinis on 7/27/20.
-//  Copyright © 2020 Rolans Apinis. All rights reserved.
-//
+//  PROGRAMMER: Rolans Apinis
+//  PANTHERID: 6044121
+//  CLASS: COP 465501 TR 5:00
+//  INSTRUCTOR: Steve Luis ECS 282
+//  ASSIGNMENT: Team/Individual Project - iRate
+//  DUE: Saturday 08/01/2020 //
 
 import UIKit
 import CoreData
@@ -13,10 +13,52 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    var askForPassword: Bool = false
+    var user: User? = nil
+    var users: [User]? = nil
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        //get user info as you turn on app
+        let context = self.persistentContainer.viewContext
+        
+        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        
+        /*
+        if user != nil && askForPassword{
+            let predicateFetch = NSPredicate(format: "userName == %@", (user?.userName)!)
+            fetch.predicate = predicateFetch
+        }
+ */
+        do {
+            users  =  try context.fetch(fetch) as? [User]
+        } catch {
+            print("Fetching Failed in \(self)")
+        }
+        //check if there are any registred users, if yes grab info if no create a new user and allow to pass the log in screen
+        
+        print("Users retrieved at appstart \(users?.count)")
+        if users?.count != 0{
+            user = users?.first
+            askForPassword = (user?.askForPassword)!
+            print("\(self) ask for password \(askForPassword.description)")
+        }else{
+            user = User(context: self.persistentContainer.viewContext)
+            user?.userName = "admin"
+            user?.userID = UUID()
+            user?.password = "admin"
+            user?.profileImage = nil
+            user?.askForPassword = false
+            
+            askForPassword = false
+            
+            self.saveContext()
+        }
+        
+        
         return true
     }
 

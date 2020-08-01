@@ -1,14 +1,24 @@
 //
-//  CategoryListTableViewController.swift
-//  Rapin001Team-iRate
-//
-//  Created by Rolans Apinis on 7/28/20.
-//  Copyright © 2020 Rolans Apinis. All rights reserved.
-//
+//  PROGRAMMER: Rolans Apinis
+//  PANTHERID: 6044121
+//  CLASS: COP 465501 TR 5:00
+//  INSTRUCTOR: Steve Luis ECS 282
+//  ASSIGNMENT: Team/Individual Project - iRate
+//  DUE: Saturday 08/01/2020 //
 
 import UIKit
+import CoreData
 
 class CategoryListTableViewController: UITableViewController {
+    
+    
+    //seting up coredata
+    var allCategories: [Category] = []
+    let localAppDelegate = UIApplication.shared.delegate as! AppDelegate
+    
+    var sortAsce = true
+    var currentCategory: Category? = nil
+    var isNewCategory = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,32 +30,93 @@ class CategoryListTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewDidAppear(_ animated: Bool) {
+        let context = localAppDelegate.persistentContainer.viewContext
+        allCategories = getData(context: context) as! [Category]
+        tableView.reloadData()
+    }
+    
+    //MARK:- getData
+    //function will retrieve all data from the DB and store it in the local variable
+    func getData(context: NSManagedObjectContext?) -> [Any]? {
+        let context = localAppDelegate.persistentContainer.viewContext
+        
+        //define custom fetch predicate
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")
+        
+        //let fetchPreditcate = NSPredicate(format: "title == \(searchBarInput)")
+        let sort = NSSortDescriptor(key: #keyPath(Category.catgoryName), ascending: sortAsce)
+        // add the predicate and sort to fetch request
+        //fetchRequest.predicate = fetchPreditcate
+        fetchRequest.sortDescriptors = [sort]
+        
+        do {
+            return try context.fetch(fetchRequest)
+        } catch {
+            print("Fetching Failed")
+        }
+        return []
+    }
+    
+    //MARK:- Button Actions
+    
+    @IBAction func addNewCategoryButton(_ sender: UIBarButtonItem) {
+        //FIXME - add code to add a new review to DB and update the rows
+        let context = localAppDelegate.persistentContainer.viewContext
+        let category = Category(context: context)
+        category.catgoryName = "New Item"
+        category.categoryDescription = "A Custom Review Category"
+        category.categoryID = nil
+        category.ownedByUser = nil
+        category.contains = []
+
+        
+        
+        //save the context
+        localAppDelegate.saveContext()
+        isNewCategory = true
+        
+        //segue
+        performSegue(withIdentifier: "showCategorySegue", sender: category)
+        
+    }
+    //Function will allow for sorting the array in a ascending and descending order
+    @IBAction func toggleSortOrderButton(_ sender: UIBarButtonItem) {
+        
+        if sortAsce{
+            sortAsce = false
+            sender.title = "Desc"
+        }else{
+            sortAsce = true
+            sender.title = "Asce"
+        }
+        allCategories = getData(context: localAppDelegate.persistentContainer.viewContext) as! [Category]
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return allCategories.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as! CategoryTableCell
+        let current: Category? = allCategories[indexPath.row]
+        
+        cell.name.text = current?.catgoryName
+        cell.categoryDescription.text = current?.categoryDescription
+        
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -82,14 +153,29 @@ class CategoryListTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        switch segue.identifier {
+        case "showCategorySegue"?:
+            let destin = segue.destination as! CategoryDetailViewController
+            let index = tableView.indexPathForSelectedRow?.row
+            
+            if isNewCategory{
+                isNewCategory = false
+                destin.currentCategory = sender as! Category
+            }else{
+                destin.currentCategory = allCategories[index!]
+            }
+        default:
+            print("Unknown segue when on \(self)")
+        }
+        
     }
-    */
+    
 
 }

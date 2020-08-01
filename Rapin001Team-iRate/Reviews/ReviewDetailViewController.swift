@@ -1,10 +1,10 @@
 //
-//  ReviewDetailViewController.swift
-//  Rapin001Team-iRate
-//
-//  Created by Rolans Apinis on 7/28/20.
-//  Copyright © 2020 Rolans Apinis. All rights reserved.
-//
+//  PROGRAMMER: Rolans Apinis
+//  PANTHERID: 6044121
+//  CLASS: COP 465501 TR 5:00
+//  INSTRUCTOR: Steve Luis ECS 282
+//  ASSIGNMENT: Team/Individual Project - iRate
+//  DUE: Saturday 08/01/2020 //
 
 /*
  Class: ReviewDetailViewController
@@ -37,7 +37,7 @@ class ReviewDetailViewController: UIViewController, UITextFieldDelegate, UITextV
     
     //picker
     var scorePicker: UIPickerView = UIPickerView()
-    var pickerStore: [String?] = ["0.0", "0.5", "1.0", "1.5", "2.0", "2.5", "3.0", "3.5", "4.0", "4.5", "5.0", "5.5", "6.0", "6.5", "7.0", "7.5", "8.0", "8.5", "9.0", "9.5", "10.0" ]
+    var pickerStore: [String?] = ["None", "0.0", "0.5", "1.0", "1.5", "2.0", "2.5", "3.0", "3.5", "4.0", "4.5", "5.0", "5.5", "6.0", "6.5", "7.0", "7.5", "8.0", "8.5", "9.0", "9.5", "10.0" ]
     
     
     override func viewDidLoad() {
@@ -144,6 +144,18 @@ class ReviewDetailViewController: UIViewController, UITextFieldDelegate, UITextV
     
     //Deleget for what to do when eturn is pressed
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == website{
+            if (textField.text?.range(of: "https://www.") == nil){
+                let temp = textField.text
+                textField.text = "https://www." + temp!
+                textField.text = textField.text?.lowercased()
+            }else if (textField.text?.range(of: "https://") == nil){
+                let temp = textField.text
+                textField.text = "https://www." + temp!
+                textField.text = textField.text?.lowercased()
+            }
+        }
         textField.resignFirstResponder()
         view.endEditing(true)
         return true
@@ -154,9 +166,6 @@ class ReviewDetailViewController: UIViewController, UITextFieldDelegate, UITextV
         textField.becomeFirstResponder()
     }
     
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        textView.becomeFirstResponder()
-    }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         textView.resignFirstResponder()

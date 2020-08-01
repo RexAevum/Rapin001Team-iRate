@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C204BE2224D4DB85002799E0 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C204BE2124D4DB85002799E0 /* LogInViewController.swift */; };
 		C2B1C3F424CFA6C8009D25C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1C3F324CFA6C8009D25C4 /* AppDelegate.swift */; };
 		C2B1C3F624CFA6C8009D25C4 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1C3F524CFA6C8009D25C4 /* UserViewController.swift */; };
 		C2B1C3F924CFA6C8009D25C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2B1C3F724CFA6C8009D25C4 /* Main.storyboard */; };
@@ -33,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C204BE2124D4DB85002799E0 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		C2B1C3F024CFA6C8009D25C4 /* Rapin001Team-iRate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Rapin001Team-iRate.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2B1C3F324CFA6C8009D25C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C2B1C3F524CFA6C8009D25C4 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				C2B1C3F524CFA6C8009D25C4 /* UserViewController.swift */,
+				C204BE2124D4DB85002799E0 /* LogInViewController.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				C2B1C3FC24CFA6C8009D25C4 /* Rapin001Team_iRate.xcdatamodeld in Sources */,
 				C2B1C3F424CFA6C8009D25C4 /* AppDelegate.swift in Sources */,
 				C2B1C41C24D0DBFC009D25C4 /* ReviewListTableViewController.swift in Sources */,
+				C204BE2224D4DB85002799E0 /* LogInViewController.swift in Sources */,
 				C2B1C42224D0FF3D009D25C4 /* CategoryListTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

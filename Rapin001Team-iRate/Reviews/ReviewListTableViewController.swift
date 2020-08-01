@@ -1,10 +1,10 @@
 //
-//  ReviewListTableViewController.swift
-//  Rapin001Team-iRate
-//
-//  Created by Rolans Apinis on 7/28/20.
-//  Copyright © 2020 Rolans Apinis. All rights reserved.
-//
+//  PROGRAMMER: Rolans Apinis
+//  PANTHERID: 6044121
+//  CLASS: COP 465501 TR 5:00
+//  INSTRUCTOR: Steve Luis ECS 282
+//  ASSIGNMENT: Team/Individual Project - iRate
+//  DUE: Saturday 08/01/2020 //
 
 import UIKit
 import CoreData
@@ -20,6 +20,8 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate{
     var searchBarInput = String("*")
     var sortAsce = false
     var predicateLast: NSPredicate?
+    var searchByCategory: Bool = false
+    var searchStringForcategory: String = ""
     
 
     override func viewDidLoad() {
@@ -34,8 +36,12 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate{
     
     override func viewDidAppear(_ animated: Bool) {
         let context = localAppDelegate.persistentContainer.viewContext
-        allReviews = getData(context: context) as! [Review]
-        tableView.reloadData()
+        if searchByCategory == false{
+            allReviews = getData(context: context) as! [Review]
+        }else{
+            allReviews = getDataForCategory(string: searchStringForcategory) as! [Review]
+        }
+         tableView.reloadData()
     }
     
 
@@ -87,6 +93,33 @@ class ReviewListTableViewController: UITableViewController, UISearchBarDelegate{
             print("Fetching Failed")
         }
         return []
+    }
+    
+    //Function to fetch data based on category
+    
+    func getDataForCategory(string: String) -> [Any]?{
+        //get context
+        let context = localAppDelegate.persistentContainer.viewContext
+        
+        //define fetch request
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Review")
+        var fetchPredicate = NSPredicate()
+        //create a predicate
+        if string != ""{
+            fetchPredicate = NSPredicate(format: "category == %@", (string.capitalized))
+            //add predicate to fetch request
+            fetchRequest.predicate = fetchPredicate
+        }
+        
+        
+        
+        //perfom safe fetch request
+        do {
+            return try context.fetch(fetchRequest) as! [Review]
+        } catch {
+            print("Fetching Failed")
+        }
+        return[]
     }
     
     //MARK:- Button Actions
