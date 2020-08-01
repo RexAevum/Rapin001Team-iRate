@@ -1,10 +1,10 @@
 //
-//  ReviewTableCell.swift
-//  Rapin001Team-iRate
-//
-//  Created by Rolans Apinis on 7/28/20.
-//  Copyright © 2020 Rolans Apinis. All rights reserved.
-//
+//  PROGRAMMER: Rolans Apinis
+//  PANTHERID: 6044121
+//  CLASS: COP 465501 TR 5:00
+//  INSTRUCTOR: Steve Luis ECS 282
+//  ASSIGNMENT: Team/Individual Project - iRate
+//  DUE: Saturday 08/01/2020 //
 
 import UIKit
 
